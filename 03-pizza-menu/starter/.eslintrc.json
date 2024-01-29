@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "requireConfigFile": false,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "jsx-runtime": {
+        "plugins":[
+            "react"
+        ]
+    },
+    "rules": {
+        "react/react-in-jsx-scope": 0
+    }
+}

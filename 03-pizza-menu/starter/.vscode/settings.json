@@ -1,0 +1,13 @@
+{
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 80,
+  "scssFormatter.singleQuote": true,
+  "html.completion.attributeDefaultValue": "singlequotes",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "editor.formatOnSave": true,
+  "[handlebars]": {
+    "editor.formatOnSave": false
+  }
+}
