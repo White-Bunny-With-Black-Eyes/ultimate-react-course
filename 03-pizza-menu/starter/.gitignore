@@ -4,3 +4,10 @@ dist/
 build/
 
 .gitignore/
+
+../../.DS_Store
+../../02-JS-review/starter/.vscode/
+../.DS_Store
+../final/.DS_Store
+../final/public/.DS_Store
+.DS_Store

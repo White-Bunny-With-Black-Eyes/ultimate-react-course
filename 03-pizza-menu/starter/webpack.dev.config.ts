@@ -8,7 +8,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 const config: webpack.Configuration = {
   context: path.resolve(__dirname),
   entry: {
-    main: path.resolve(__dirname, './src/index.tsx'),
+    main: path.resolve(__dirname, './src/main.tsx'),
   },
   output: {
     filename: '[name].bundle.js',
@@ -78,23 +78,33 @@ const config: webpack.Configuration = {
         ],
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: [
+              '@babel/preset-env',
+              [
+                '@babel/preset-react',
+                {
+                  runtime: 'automatic',
+                },
+              ],
+            ],
           },
         },
       },
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         loader: 'ts-loader',
       },
       {
         test: /\.svg$/,
         type: 'asset/resource',
+        issuer: /\.[jt]sx$/,
+        use: ['@svgr/webpack'],
         generator: {
           filename: 'images/[name][ext]',
         },
@@ -116,7 +126,6 @@ const config: webpack.Configuration = {
       filename: './index.html',
       title: "Koppe-chan's pizza menu",
       template: path.resolve(__dirname, './src/page-template.hbs'),
-      chunks: ['pizza-menu'],
       description: "Koppe-chan's homemade pizza",
     }),
     new BundleAnalyzerPlugin(),
