@@ -5,56 +5,72 @@ import { createElement } from 'react';
 import './index.css';
 import spinach from './pizzas/spinaci.jpg';
 import funghi from './pizzas/funghi.jpg';
+import margherita from './pizzas/margherita.jpg';
+import proscuitto from './pizzas/prosciutto.jpg';
+import salamino from './pizzas/salamino.jpg';
+import focaccia from './pizzas/focaccia.jpg';
+
 // import App from './App';
 
-type PizzaProps = {
+type PizzaCompProp = {
   name: string;
   ingredients: string;
   photoName: string;
   price: number;
+  soldOut?: boolean;
 };
+
+interface PizzaProp {
+  pizzaObj: PizzaCompProp;
+}
 
 const pizzaData = [
   {
     name: 'Focaccia',
     ingredients: 'Bread with italian olive oil and rosemary',
     price: 6,
-    photoName: 'pizzas/focaccia.jpg',
+    // photoName: 'pizzas/focaccia.jpg',
+    photoName: focaccia,
     soldOut: false,
   },
   {
     name: 'Pizza Margherita',
     ingredients: 'Tomato and mozarella',
     price: 10,
-    photoName: 'pizzas/margherita.jpg',
+    // photoName: 'pizzas/margherita.jpg',
+    photoName: margherita,
     soldOut: false,
   },
   {
     name: 'Pizza Spinaci',
     ingredients: 'Tomato, mozarella, spinach, and ricotta cheese',
     price: 12,
-    photoName: 'pizzas/spinaci.jpg',
+    // photoName: 'pizzas/spinaci.jpg',
+    photoName: spinach,
     soldOut: false,
   },
   {
     name: 'Pizza Funghi',
     ingredients: 'Tomato, mozarella, mushrooms, and onion',
     price: 12,
-    photoName: 'pizzas/funghi.jpg',
+    // photoName: 'pizzas/funghi.jpg',
+    photoName: funghi,
     soldOut: false,
   },
   {
     name: 'Pizza Salamino',
     ingredients: 'Tomato, mozarella, and pepperoni',
     price: 15,
-    photoName: 'pizzas/salamino.jpg',
+    // photoName: 'pizzas/salamino.jpg',
+    photoName: salamino,
     soldOut: true,
   },
   {
     name: 'Pizza Prosciutto',
     ingredients: 'Tomato, mozarella, ham, aragula, and burrata cheese',
     price: 18,
-    photoName: 'pizzas/prosciutto.jpg',
+    // photoName: 'pizzas/prosciutto.jpg',
+    photoName: proscuitto,
     soldOut: false,
   },
 ];
@@ -87,7 +103,13 @@ const Menu = () => {
   return (
     <main className='menu'>
       <h2>Our menu</h2>
-      <Pizza
+
+      <ul className='pizzas'>
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} />
+        ))}
+      </ul>
+      {/* <Pizza
         name='Pizza Spinach'
         ingredients='Tomato, mozarella, spinach, and ricotta cheese'
         photoName={spinach}
@@ -98,22 +120,22 @@ const Menu = () => {
         ingredients='Tomato, mushrooms'
         photoName={funghi}
         price={12}
-      />
+      /> */}
     </main>
   );
 };
 
-const Pizza: React.FC<PizzaProps> = (props) => {
+const Pizza: React.FC<PizzaProp> = (props: PizzaProp) => {
   console.log(props);
   return (
-    <div className='pizza'>
+    <li className='pizza'>
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
       <div>
-        <img src={props.photoName} alt={props.name} />
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{props.price + 3}</span>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.price + 3}</span>
       </div>
-    </div>
+    </li>
   );
 };
 
