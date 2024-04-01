@@ -73,8 +73,8 @@ interface MainProps {
 }
 
 interface BoxProps {
-  // children: React.ReactNode;
-  element: React.ReactNode;
+  children: React.ReactNode;
+  // element: React.ReactNode;
 }
 
 interface MovieListProps {
@@ -109,7 +109,7 @@ export default function App() {
         <NumResults movies={movies} />
       </NavBar>
       <Main>
-        <Box element={<MovieList movies={movies} />} />
+        {/* <Box element={<MovieList movies={movies} />} />
         <Box
           element={
             <>
@@ -117,14 +117,14 @@ export default function App() {
               <WatchedMovieList watched={watched} />
             </>
           }
-        />
-        {/* <Box>
+        /> */}
+        <Box>
           <MovieList movies={movies} />
         </Box>
         <Box>
           <WatchedSummary watched={watched} />
           <WatchedMovieList watched={watched} />
-        </Box> */}
+        </Box>
       </Main>
     </>
   );
@@ -173,14 +173,14 @@ const Main: React.FC<MainProps> = ({ children }) => {
   return <main className='main'>{children}</main>;
 };
 
-const Box: React.FC<BoxProps> = ({ element }) => {
+const Box: React.FC<BoxProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div className='box'>
       <button className='btn-toggle' onClick={() => setIsOpen((open) => !open)}>
         {isOpen ? '–' : '+'}
       </button>
-      {isOpen && element}
+      {isOpen && children}
     </div>
   );
 };
