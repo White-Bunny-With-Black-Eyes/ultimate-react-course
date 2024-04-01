@@ -69,11 +69,11 @@ interface NumResultsProps {
 }
 
 interface MainProps {
-  movies: TempMovieDataProps[];
+  children: React.ReactNode;
 }
 
 interface ListBoxProps {
-  movies: TempMovieDataProps[];
+  children: React.ReactNode;
 }
 
 interface MovieListProps {
@@ -106,7 +106,13 @@ export default function App() {
         <Search />
         <NumResults movies={movies} />
       </NavBar>
-      <Main movies={movies} />
+      <Main>
+        <ListBox>
+          {' '}
+          <MovieList movies={movies} />{' '}
+        </ListBox>
+        <WatchedBox />
+      </Main>
     </>
   );
 }
@@ -150,23 +156,18 @@ const NumResults: React.FC<NumResultsProps> = ({ movies }) => {
   );
 };
 
-const Main: React.FC<MainProps> = ({ movies }) => {
-  return (
-    <main className='main'>
-      <ListBox movies={movies} />
-      <WatchedBox />
-    </main>
-  );
+const Main: React.FC<MainProps> = ({ children }) => {
+  return <main className='main'>{children}</main>;
 };
 
-const ListBox: React.FC<ListBoxProps> = ({ movies }) => {
+const ListBox: React.FC<ListBoxProps> = ({ children }) => {
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className='box'>
       <button className='btn-toggle' onClick={() => setIsOpen1((open) => !open)}>
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && <MovieList movies={movies} />}
+      {isOpen1 && children}
     </div>
   );
 };
