@@ -60,6 +60,26 @@ const tempWatchedData = [
   },
 ];
 
+interface NavBarProps {
+  movies: TempMovieDataProps[];
+}
+
+interface NumResultsProps {
+  movies: TempMovieDataProps[];
+}
+
+interface MainProps {
+  movies: TempMovieDataProps[];
+}
+
+interface ListBoxProps {
+  movies: TempMovieDataProps[];
+}
+
+interface MovieListProps {
+  movies: TempMovieDataProps[];
+}
+
 interface MovieProps {
   movie: TempMovieDataProps;
 }
@@ -82,18 +102,18 @@ export default function App() {
   const [movies, setMovies] = useState<TempMovieDataProps[]>(tempMovieData);
   return (
     <>
-      <NavBar />
+      <NavBar movies={movies} />
       <Main movies={movies} />
     </>
   );
 }
 
-const NavBar = () => {
+const NavBar: React.FC<NavBarProps> = ({ movies }) => {
   return (
     <nav className='nav-bar'>
       <Logo />
       <Search />
-      <NumResults />
+      <NumResults movies={movies} />
     </nav>
   );
 };
@@ -120,36 +140,36 @@ const Search = () => {
   );
 };
 
-const NumResults = () => {
+const NumResults: React.FC<NumResultsProps> = ({ movies }) => {
   return (
     <p className='num-results'>
-      Found <strong>X</strong> results
+      Found <strong>{movies.length}</strong> results
     </p>
   );
 };
 
-const Main = () => {
+const Main: React.FC<MainProps> = ({ movies }) => {
   return (
     <main className='main'>
-      <ListBox />
+      <ListBox movies={movies} />
       <WatchedBox />
     </main>
   );
 };
 
-const ListBox = () => {
+const ListBox: React.FC<ListBoxProps> = ({ movies }) => {
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className='box'>
       <button className='btn-toggle' onClick={() => setIsOpen1((open) => !open)}>
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && <MovieList />}
+      {isOpen1 && <MovieList movies={movies} />}
     </div>
   );
 };
 
-const MovieList = () => {
+const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   return (
     <ul className='list'>
       {movies?.map((movie) => (
