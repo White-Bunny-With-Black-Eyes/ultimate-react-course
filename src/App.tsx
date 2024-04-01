@@ -72,7 +72,7 @@ interface MainProps {
   children: React.ReactNode;
 }
 
-interface ListBoxProps {
+interface BoxProps {
   children: React.ReactNode;
 }
 
@@ -100,6 +100,7 @@ const average = (arr: number[]) => arr.reduce((acc, cur) => acc + cur / arr.leng
 
 export default function App() {
   const [movies, setMovies] = useState<TempMovieDataProps[]>(tempMovieData);
+  const [watched, setWatched] = useState<TempWatchDataProps[]>(tempWatchedData);
   return (
     <>
       <NavBar>
@@ -107,11 +108,13 @@ export default function App() {
         <NumResults movies={movies} />
       </NavBar>
       <Main>
-        <ListBox>
-          {' '}
-          <MovieList movies={movies} />{' '}
-        </ListBox>
-        <WatchedBox />
+        <Box>
+          <MovieList movies={movies} />
+        </Box>
+        <Box>
+          <WatchedSummary watched={watched} />
+          <WatchedMovieList watched={watched} />
+        </Box>
       </Main>
     </>
   );
@@ -160,17 +163,36 @@ const Main: React.FC<MainProps> = ({ children }) => {
   return <main className='main'>{children}</main>;
 };
 
-const ListBox: React.FC<ListBoxProps> = ({ children }) => {
-  const [isOpen1, setIsOpen1] = useState(true);
+const Box: React.FC<BoxProps> = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div className='box'>
-      <button className='btn-toggle' onClick={() => setIsOpen1((open) => !open)}>
-        {isOpen1 ? '–' : '+'}
+      <button className='btn-toggle' onClick={() => setIsOpen((open) => !open)}>
+        {isOpen ? '–' : '+'}
       </button>
-      {isOpen1 && children}
+      {isOpen && children}
     </div>
   );
 };
+
+// const WatchedBox = () => {
+//   const [watched, setWatched] = useState<TempWatchDataProps[]>(tempWatchedData);
+//   const [isOpen2, setIsOpen2] = useState(true);
+
+//   return (
+//     <div className='box'>
+//       <button className='btn-toggle' onClick={() => setIsOpen2((open) => !open)}>
+//         {isOpen2 ? '–' : '+'}
+//       </button>
+//       {isOpen2 && (
+//         <>
+//           <WatchedSummary watched={watched} />
+//           <WatchedMovieList watched={watched} />
+//         </>
+//       )}
+//     </div>
+//   );
+// };
 
 const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   return (
@@ -194,25 +216,6 @@ const Movie: React.FC<MovieProps> = ({ movie }) => {
         </p>
       </div>
     </li>
-  );
-};
-
-const WatchedBox = () => {
-  const [watched, setWatched] = useState<TempWatchDataProps[]>(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
-
-  return (
-    <div className='box'>
-      <button className='btn-toggle' onClick={() => setIsOpen2((open) => !open)}>
-        {isOpen2 ? '–' : '+'}
-      </button>
-      {isOpen2 && (
-        <>
-          <WatchedSummary watched={watched} />
-          <WatchedMovieList watched={watched} />
-        </>
-      )}
-    </div>
   );
 };
 
