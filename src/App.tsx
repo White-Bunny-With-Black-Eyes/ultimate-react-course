@@ -61,7 +61,7 @@ const tempWatchedData = [
 ];
 
 interface NavBarProps {
-  movies: TempMovieDataProps[];
+  children: React.ReactNode;
 }
 
 interface NumResultsProps {
@@ -102,18 +102,20 @@ export default function App() {
   const [movies, setMovies] = useState<TempMovieDataProps[]>(tempMovieData);
   return (
     <>
-      <NavBar movies={movies} />
+      <NavBar>
+        <Search />
+        <NumResults movies={movies} />
+      </NavBar>
       <Main movies={movies} />
     </>
   );
 }
 
-const NavBar: React.FC<NavBarProps> = ({ movies }) => {
+const NavBar: React.FC<NavBarProps> = ({ children }) => {
   return (
     <nav className='nav-bar'>
       <Logo />
-      <Search />
-      <NumResults movies={movies} />
+      {children}
     </nav>
   );
 };
