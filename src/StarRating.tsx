@@ -21,10 +21,13 @@ const textStyle = {
 
 interface StarProp {
   full: boolean;
+  onHoverIn: () => void;
+  onHoverOut: () => void;
   onRate: () => void;
 }
 const StarRating: React.FC<StarRatingProps> = ({ maxRating = 5 }) => {
   const [rating, setRating] = useState<number>(0);
+  const [tempRating, setTempRating] = useState<number>(0);
 
   const handleRating = (rating: number) => {
     setRating(rating);
@@ -33,10 +36,16 @@ const StarRating: React.FC<StarRatingProps> = ({ maxRating = 5 }) => {
     <div style={containerStyle}>
       <div style={starContainerStyle}>
         {Array.from({ length: maxRating }, (__, i) => (
-          <Star key={i} onRate={() => handleRating(i + 1)} full={rating >= i + 1} />
+          <Star
+            key={i}
+            onRate={() => handleRating(i + 1)}
+            full={rating >= i + 1}
+            onHoverIn={() => setTempRating(i + 1)}
+            onHoverOut={() => setTempRating(0)}
+          />
         ))}
       </div>
-      <p style={textStyle}>{rating || ''}</p>
+      <p style={textStyle}>{tempRating || ''}</p>
     </div>
   );
 };
@@ -48,9 +57,15 @@ const starStyle = {
   cursor: 'pointer',
 };
 
-const Star: React.FC<StarProp> = ({ onRate, full }) => {
+const Star: React.FC<StarProp> = ({ onRate, onHoverIn, onHoverOut, full }) => {
   return (
-    <span role='button' style={starStyle} onClick={onRate}>
+    <span
+      role='button'
+      style={starStyle}
+      onClick={onRate}
+      onMouseEnter={onHoverIn}
+      onMouseLeave={onHoverOut}
+    >
       {full ? (
         <svg
           xmlns='http://www.w3.org/2000/svg'
