@@ -4,6 +4,7 @@ interface StarRatingProps {
   maxRating?: number;
   color?: string;
   size?: number;
+  className?: string;
 }
 
 const containerStyle = {
@@ -28,6 +29,7 @@ const StarRating: React.FC<StarRatingProps> = ({
   maxRating = 5,
   color = '#fcc419',
   size = 48,
+  className = '',
 }) => {
   const [rating, setRating] = useState<number>(0);
   const [tempRating, setTempRating] = useState<number>(0);
@@ -44,7 +46,7 @@ const StarRating: React.FC<StarRatingProps> = ({
   };
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} className={className}>
       <div style={starContainerStyle}>
         {Array.from({ length: maxRating }, (__, i) => (
           <Star
