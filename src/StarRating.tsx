@@ -5,6 +5,7 @@ interface StarRatingProps {
   color?: string;
   size?: number;
   className?: string;
+  messages?: string[];
 }
 
 const containerStyle = {
@@ -30,6 +31,7 @@ const StarRating: React.FC<StarRatingProps> = ({
   color = '#fcc419',
   size = 48,
   className = '',
+  messages = [],
 }) => {
   const [rating, setRating] = useState<number>(0);
   const [tempRating, setTempRating] = useState<number>(0);
@@ -60,7 +62,11 @@ const StarRating: React.FC<StarRatingProps> = ({
           />
         ))}
       </div>
-      <p style={textStyle}>{tempRating || rating || ''}</p>
+      <p style={textStyle}>
+        {messages.length === maxRating
+          ? messages[tempRating ? tempRating - 1 : rating - 1]
+          : tempRating || rating || ''}
+      </p>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const root = createRoot(el!);
 root.render(
   <StrictMode>
     {/* <App /> */}
-    <StarRating maxRating={5} />
+    <StarRating maxRating={5} messages={['Terrible', 'Bad', 'Okay', 'Good', 'Amazing']} />
     <StarRating maxRating={10} size={24} color='red' className='test' />
   </StrictMode>
 );
